@@ -1,28 +1,21 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Database {
 
-    private Superhero[] superheroList;
-    int count = 0;
+    final ArrayList<Superhero> superheroList;
 
     public Database() {
-        this.superheroList = new Superhero[5];
+        this.superheroList = new ArrayList<>();
+
     }
+
     public void addSuperhero(String name, String realName, String superpower, int age, int strength, boolean isHuman) {
-        superheroList[count++] = new Superhero(name, realName, superpower, age, strength, isHuman);
-
+        superheroList.add( new Superhero(name, realName, superpower, age, strength, isHuman));
     }
+
     public Superhero getSuperhero(int index) {
-        return superheroList[index];
-    }
-    public Superhero setSuperhero(int index) {
-        return superheroList[index];
+        return superheroList.get(index);
     }
 
-    @Override
-    public String toString() {
-        return "Database{" +
-                "superheroList=" + Arrays.toString(superheroList) +
-                '}';
     }
-}
+
