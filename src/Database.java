@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Database {
 
@@ -15,6 +16,9 @@ public class Database {
 
     public Superhero getSuperhero(int index) {
         return superheroList.get(index);
+    }
+    public Superhero findSuperhero(Objects findSuperhero) {
+
     }
 
     }
