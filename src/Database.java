@@ -18,6 +18,7 @@ public class Database {
         return superheroList.get(index);
     }
     public Superhero findSuperhero(Objects findSuperhero) {
+        return null;
 
     }
 
