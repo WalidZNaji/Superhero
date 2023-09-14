@@ -14,6 +14,7 @@ import java.util.Scanner;
             System.out.println("---Start menu---");
             System.out.println( "Tryk 1: Opret ny superhelt\n" +
                                 "Tryk 2: Vis superhelte liste\n" +
+                                "Tryk 3: Søg efter superhelt\n" +
                                 "Tryk 9: Afslut programmet");
 
             int startInput = scan.nextInt();
@@ -60,6 +61,14 @@ import java.util.Scanner;
                 System.out.println(database.superheroList);
                 System.out.print("Tilbage til start menuen? [y/n] ");
                 runAgain = scan.next();
+
+            } else if (startInput == 3) {
+                System.out.print("Indtast søgning: ");
+                String søgning = scan.next();
+                System.out.println(database.findSuperhero(søgning));
+                System.out.print("Tilbage til start menuen? [y/n] ");
+                runAgain = scan.next();
+
 
             } else if (startInput == 9) {
                 System.out.println("Programmet er afsluttet.");

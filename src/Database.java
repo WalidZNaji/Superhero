@@ -11,16 +11,23 @@ public class Database {
     }
 
     public void addSuperhero(String name, String realName, String superpower, int age, int strength, boolean isHuman) {
-        superheroList.add( new Superhero(name, realName, superpower, age, strength, isHuman));
+        superheroList.add(new Superhero(name, realName, superpower, age, strength, isHuman));
     }
 
     public Superhero getSuperhero(int index) {
         return superheroList.get(index);
     }
-    public Superhero findSuperhero(Objects findSuperhero) {
-        return null;
 
+    public ArrayList<String> findSuperhero(String superheroName) {
+        ArrayList<String> superheroes = new ArrayList<>();
+
+        for (Superhero superhero : superheroList) {
+            if (superhero.getName().toLowerCase().contains(superheroName.toLowerCase())) {
+
+                if (!superheroName.contains(superhero.getName())) {
+                    superheroes.add(superhero.getName());
+                }
+            }
+        } return superheroes;
     }
-
-    }
-
+}
