@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+
+// Noter: 'true' når man finder en helt frem. meh.
 
 public class UserInterface {
 
@@ -23,35 +26,44 @@ public class UserInterface {
 
         while (runAgain.equalsIgnoreCase("y")) {
 
-            printStartMessage();
+            printStartMenu();
+
+            while (!scan.hasNextInt()) {
+            scan.nextLine();
+            System.out.print("Indtast et tal mellem 1-9: ");
+            }
 
             int startInput = scan.nextInt();
+
+            if (startInput > 9) {
+                System.out.println("Indtast et tal mellem 1-9: ");
+            }
 
             if (startInput == (1)) {
                 createSuperhero();
 
-                backToMenu();
+                backToMenuMessage();
 
                 runAgain = scan.next();
 
             } else if (startInput == 2) {
                 showSuperheroList();
 
-                backToMenu();
+                backToMenuMessage();
 
                 runAgain = scan.next();
 
             } else if (startInput == 3) {
                 searchForSuperhero();
 
-                backToMenu();
+                backToMenuMessage();
 
                 runAgain = scan.next();
 
             } else if (startInput == 4) {
                 findAndEditSuperhero();
 
-                backToMenu();
+                backToMenuMessage();
 
             } else if (startInput == 9) {
                 runAgain = "n";
@@ -60,7 +72,7 @@ public class UserInterface {
         System.out.println("Programmet er afsluttet.");
     }
 
-    private void printStartMessage() {
+    private void printStartMenu() {
         System.out.println("---Start menu---");
         System.out.println("Tryk 1: Opret ny superhelt\n" +
                 "Tryk 2: Vis superhelte liste\n" +
@@ -80,18 +92,37 @@ public class UserInterface {
         System.out.print("Indtast superheltens superkraft: ");
         String superpowerSuperhero = scan.nextLine();
 
-        System.out.print("Indtast superheltens alder: ");
-        int ageSuperhero = scan.nextInt();
 
-        System.out.print("Indtast superheltens styrkeniveau 1-9999: ");
-        int strengthSuperhero = scan.nextInt();
+        int ageSuperhero = 0;
+        while (true) {    // Infinite loop. stopper kun ved 'break'.
+            try {
+                System.out.print("Indtast superheltens alder: ");
+                ageSuperhero = scan.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Ugyldigt svar. Indtast superheltens alder fx. '35'");
+                scan.nextLine();  // fanger og skiller sig af med det forkerte input.
+            }
+        }
+
+        int strengthSuperhero = 0;
+        while (true) {
+            try {
+                System.out.print("Indtast superheltens styrkeniveau 1-9999: ");
+                strengthSuperhero = scan.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Ugyldigt svar. Indtast styrkeniveau fx. '2300'");
+                scan.nextLine();
+            }
+        }
 
         System.out.print("Er superhelten et menneske? [y/n] ");
 
         String userInput = scan.next();
         boolean isHumanSuperhero = false; /* Lokale variabler skal have en værdi, derfor gives
                                                   "false" som default */
-        if (userInput.equalsIgnoreCase("Y")) {
+        if (userInput.equalsIgnoreCase("y")) {
             isHumanSuperhero = true;
         } else if (userInput.equalsIgnoreCase("n")) {
             isHumanSuperhero = false;
@@ -131,16 +162,30 @@ public class UserInterface {
             int tæller = 1;
             for (Superhero superhero : søgeResultat) {
                 System.out.println(tæller++ + ". " +
-                        superhero.getName() + " " +
-                        superhero.getRealName() + " " +
-                        superhero.getSuperpower() + " " +
-                        superhero.getAge() + " " +
-                        superhero.getStrength() + " " +
+                        superhero.getName() + ", " +
+                        superhero.getRealName() + ", " +
+                        superhero.getSuperpower() + ", " +
+                        superhero.getAge() + "år, " +
+                        superhero.getStrength() + " powerlevel, " +
                         superhero.isHuman());
             }
-            int superheroPick = scan.nextInt();
-            scan.nextLine(); // Håndterer Scanner Bug
-            superheroToEdit = søgeResultat.get(superheroPick - 1);
+            int superheroPick = 0;
+            while (true) {
+                try {
+                    superheroPick = scan.nextInt();
+                    scan.nextLine(); // Håndterer Scanner Bug
+                    if (superheroPick > 0 && superheroPick <= søgeResultat.size()) {
+                        superheroToEdit = søgeResultat.get(superheroPick - 1);
+                        break;
+                    }   else {
+                        System.out.print("Tal ikke inde for rækkevidde. Prøv igen: ");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.print("Ugyldigt input. Indtast et tal fx. '1': ");
+                    scan.nextLine();
+                }
+            }
+
         }
         //Søgning finder én person
         else {
@@ -181,11 +226,11 @@ public class UserInterface {
             }
         }
     }
-    private void backToMenu() {
+    private void backToMenuMessage() {
         System.out.print("Tilbage til start menuen? [y/n] ");
     }
     private void premadeSuperheroes() {
-        database.addSuperhero("Rico", "Victor Thy", "Skifte personlighed ved indtagelse af alkohol", 23, 9, true);
+        database.addSuperhero("Rico", "Victor Thy", "Skifter personlighed ved indtagelse af alkohol", 23, 9, true);
         database.addSuperhero("Menig Hoijer", "Mads Teglskov", "Superstyrke, Stram", 24, 8, true);
         database.addSuperhero("AC", "Anders kristensen", "Retard strength", 31, 6, true);
         database.addSuperhero("TS", "Tommy Skrudstrup", "Dårlig beslutningstager. Altid gør det modsatte af hvad han siger", 38, 8, true);
@@ -193,5 +238,6 @@ public class UserInterface {
     private void printWelcomeMessage() {
         System.out.println("-----Velkommen til superhelte databasen-----");
     }
+
     }
 

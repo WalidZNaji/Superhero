@@ -66,13 +66,13 @@ public class Superhero {
 
     @Override
     public String toString() {
-        String isHumanString = isHuman ? "Is human" : "Is not human";
-        return "--- Superhero --- \n" +
-                "name: " + name + "\n" +
-                "realName: " + realName + "\n" +
-                "superpower: " + superpower + "\n" +
-                "age: " + age + "\n" +
-                "strength: " + strength + "\n" +
-                "isHuman: " + isHumanString + "\n";
+        String isHumanString = isHuman ? "Superhero is human" : "Superhero is not human";
+        return
+                "Name: " + name + "\n" +
+                "RealName: " + realName + "\n" +
+                "Superpower: " + superpower + "\n" +
+                "Age: " + age + "\n" +
+                "Strength: " + strength + "\n" +
+                "Human?: " + isHumanString + "\n";
     }
 }
